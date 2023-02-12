@@ -1,10 +1,9 @@
-import cookieParser from "cookie-parser"
 
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 dotenv.config()
 
-export const createJWT = (user_id) => {
+const createJWT = (user_id) => {
     let token = null
     try {
         token = jwt.sign({ user_id: user_id }, "Ngandeptrai", { expiresIn: "2h", })
@@ -36,8 +35,13 @@ const checkToken = (req, res) => {
     return token
 }
 
-export const verifyUser = (req, res, next) => {
+const verifyUser = (req, res, next) => {
     const token = checkToken(req, res)
     let decoded = verifyJWT(token)
 
+}
+
+module.exports = {
+    createJWT,
+    verifyUser
 }
