@@ -1,8 +1,8 @@
 const express = require("express")
 const route = express.Router()
 const AuthControllers = require("../controllers/auth")
-
-route.post("/register", AuthControllers.createUser)
+const { midlewareUploadImage } = require("../midleware/midlewareUploadImage")
+route.post("/register", midlewareUploadImage, AuthControllers.createUser)
 route.post("/login", AuthControllers.loginUser)
 route.post("/logout", AuthControllers.logoutUser)
 
