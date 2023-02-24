@@ -2,7 +2,7 @@ import React from 'react';
 
 const Wrapper = (props) => {
     return (
-        <div className='w-full min-h-screen flex flex-col xl:gap-4 gap-3 justify-between mx-auto'>
+        <div className='w-full min-h-screen flex flex-col  mx-auto'>
             {
                 props.children
             }
