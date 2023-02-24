@@ -3,11 +3,11 @@ const { createJWT } = require("../verify/verifyToken")
 const db = require("../models")
 const { resNotify } = require("../handleNotify/resNotify")
 const { Op } = require("sequelize")
-
 const createUser = async (req, res) => {
     try {
         const { user_name, user_email, user_password, user_country } = req.body
-        const { user_avatar } = req.files
+        const user_avatar = req.files.file
+
         if (!user_name || !user_email || !user_password || !user_avatar || !user_country)
             return res.status(200).json({ ...resNotify("warning", "Lack of information") })
         const salt = await bcrypt.genSalt(10)
@@ -33,7 +33,6 @@ const createUser = async (req, res) => {
         res.json({ ...resNotify("error", error) })
     }
 }
-
 const loginUser = async (req, res) => {
     const { user_email, user_password } = req.body
     const user = await db.tbl_user.findOne({

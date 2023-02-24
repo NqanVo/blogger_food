@@ -1,6 +1,6 @@
-
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
+const { resNotify } = require("../handleNotify/resNotify")
 dotenv.config()
 
 const createJWT = (user_id) => {
@@ -26,7 +26,7 @@ const verifyJWT = (token) => {
 }
 
 const checkToken = (req, res) => {
-    const token = req.cookie.access_token
+    const token = req.cookies.access_token
     if (!token)
         res.status(200).json({
             status: "error",
@@ -37,8 +37,15 @@ const checkToken = (req, res) => {
 
 const verifyUser = (req, res, next) => {
     const token = checkToken(req, res)
-    let decoded = verifyJWT(token)
-
+    const id_req = parseInt(req.params.id)
+    let { user_id } = verifyJWT(token)
+    if (id_req !== user_id)
+        res.status(200).json({
+            ...resNotify("error", "Ban khong co quyen")
+        })
+    else {
+        next()
+    }
 }
 
 module.exports = {
