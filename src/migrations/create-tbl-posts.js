@@ -12,6 +12,7 @@ module.exports = {
       post_title: { allowNull: false, type: Sequelize.STRING },
       post_desc: { allowNull: false, type: Sequelize.STRING },
       post_thumb: { allowNull: false, type: Sequelize.STRING },
+      category_id: { allowNull: false, type: Sequelize.INTEGER },
       user_id: { allowNull: false, type: Sequelize.INTEGER },
       updatedAt: { allowNull: false, type: Sequelize.DATE, defaultValue: Sequelize.literal('NOW()') },
       createdAt: { allowNull: false, type: Sequelize.DATE, defaultValue: Sequelize.literal('NOW()') },
