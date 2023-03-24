@@ -11,9 +11,9 @@ const removeThumbOld = async (post_id) => {
 }
 
 const attributesGetPosts = [['id', 'post_id'], 'post_title', 'post_desc', 'post_thumb', ['createdAt', 'createdAtPost']]
-const includeGetPosts = [{ model: db.tbl_user, as: "dataUser", attributes: [['id', 'user_id'], 'user_name', 'user_avatar', 'user_country', ['createdAt', 'createdAtUser']] },
-
-{ model: db.tbl_category, as: "dataCategory", attributes: ['category_name'] }]
+const includeGetPosts = [
+    { model: db.tbl_user, as: "dataUser", attributes: [['id', 'user_id'], 'user_name', 'user_avatar', 'user_country', ['createdAt', 'createdAtUser']] },
+    { model: db.tbl_category, as: "dataCategory", attributes: ['category_name', ['id', 'category_id']] }]
 const getPosts = async (req, res) => {
     try {
         let { author, category, pages, order, limit, authorID } = req.query
@@ -123,13 +123,13 @@ const updatePost = async (req, res) => {
         const user_id = req.params.id
         const post_id = req.params.post_id
         const { post_title, post_desc, category_id } = req.body
-        const post_thumb = req.files.file
+        const post_thumb = req.files
         let thumb = {}
         let rename_thumb
         if (post_thumb) {
             await removeThumbOld(post_id)
-            rename_thumb = await post_thumb.post_thumb.name.split(".")[0] + "_" + Date.now() + "." + post_thumb.post_thumb.mimetype.split("/")[1]
-            post_thumb.post_thumb.mv('./src/uploads/' + rename_thumb)
+            rename_thumb = await post_thumb.file.name.split(".")[0] + "_" + Date.now() + "." + post_thumb.file.mimetype.split("/")[1]
+            post_thumb.file.mv('./src/uploads/' + rename_thumb)
             thumb = { ...thumb, post_thumb: rename_thumb }
         }
         await db.tbl_post.update({
@@ -148,7 +148,9 @@ const updatePost = async (req, res) => {
             ...resNotify("success", "Update success")
         })
     } catch (error) {
-        res.send(error)
+        res.status(200).json({
+            ...resNotify("error", "something error")
+        })
     }
 }
 
@@ -161,6 +163,7 @@ const deletePost = async (req, res) => {
     const posts = await db.tbl_post.findAll({
         attributes: attributesGetPosts,
         where: { user_id: user_id },
+        order: [['post_id', "DESC"]],
         limit: 10,
         include: includeGetPosts
     })
