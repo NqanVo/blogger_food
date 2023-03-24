@@ -2,11 +2,12 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 const { resNotify } = require("../handleNotify/resNotify")
 dotenv.config()
+const moment = require("moment")
 
 const createJWT = (user_id) => {
     let token = null
     try {
-        token = jwt.sign({ user_id: user_id }, "Ngandeptrai", { expiresIn: "2h", })
+        token = jwt.sign({ user_id: user_id }, "Ngandeptrai", { expiresIn: "1h" })
     } catch (error) {
         console.log(error)
     }
@@ -36,15 +37,22 @@ const checkToken = (req, res) => {
 }
 
 const verifyUser = (req, res, next) => {
-    const token = checkToken(req, res)
-    const id_req = parseInt(req.params.id)
-    let { user_id } = verifyJWT(token)
-    if (id_req !== user_id)
+    try {
+        const token = checkToken(req, res)
+        const id_req = parseInt(req.params.id)
+        let { user_id } = verifyJWT(token)
+
+        if (id_req !== user_id)
+            res.status(200).json({
+                ...resNotify("error", "Ban khong co quyen")
+            })
+        else {
+            next()
+        }
+    } catch (error) {
         res.status(200).json({
-            ...resNotify("error", "Ban khong co quyen")
+            ...resNotify("tokenExpired", "Access expired, login again")
         })
-    else {
-        next()
     }
 }
 
