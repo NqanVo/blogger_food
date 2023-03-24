@@ -1,4 +1,4 @@
-# Back End Api
+# Back End Api: NodeJs, Express, Express-uploadfile, JWT
 ## Auth
 ### Register: Method: Post, /api/auth/register
 #### Req, Body: 
