@@ -56,7 +56,7 @@ const Header = () => {
                         <div className="absolute h-[2px] w-0 opacity-0 group-hover:w-full group-hover:opacity-100 transition-all bg-black left-0 right-0 rounded-full mx-auto"></div>
                     </li>
                 </ul> */}
-                {!user.id ? (<ul className='flex items-center gap-2 lg:gap-3 xl:gap-4'>
+                {(!user.id) ? (<ul className='flex items-center gap-2 lg:gap-3 xl:gap-4'>
                     <li>
                         <Button name={"Register"} handleOnClick={handleToRegister} size="s" type="primary" />
                     </li>

@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import 'react-notifications/lib/notifications.css';
 import Information from "./pages/Information";
 import CreatePost from "./pages/CreatePost";
+import UpdatePost from "./pages/UpdatePost";
 function App() {
   return (
     <Routes>
@@ -18,6 +19,7 @@ function App() {
 
       <Route path="/information" element={<Information />}></Route>
       <Route path="/create-post" element={<CreatePost />}></Route>
+      <Route path="/update-post/:id" element={<UpdatePost />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/*"></Route>

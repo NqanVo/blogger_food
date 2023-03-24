@@ -10,6 +10,7 @@ import Pagination from '../components/Pagination';
 import News from '../components/default/News';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/default/Button';
+import { useSelector } from 'react-redux';
 
 const categorise = [
     {
@@ -43,6 +44,10 @@ const Home = () => {
     const [pagesCategory, setPagesCategory] = useState(0)
     const [viewPageCat, setViewPageCat] = useState(1)
     const [choseCat, setChoseCat] = useState("asian")
+
+    const user_id = useSelector((state) => state.auth.login.user_data.id)
+
+
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(`${process.env.REACT_APP_URL_API}posts?pages=${viewPageMPD}&limit=4`)
@@ -89,7 +94,7 @@ const Home = () => {
                                     <div
                                         onMouseOver={() => setDataAuthor(post.dataUser)}
                                         key={index}
-                                        className={`${(index % 2 === 0) ? "col-span-3" : "col-span-2"} relative w-full h-40 hover:cursor-pointer overflow-hidden`}>
+                                        className={`${(index === 0 || index === 3) ? "col-span-3" : "col-span-2"} relative w-full h-40 hover:cursor-pointer overflow-hidden`}>
                                         <img src={process.env.REACT_APP_URL_API_IMAGE + post.post_thumb} alt="" className='absolute inset-0 w-full h-full object-cover' />
                                         <div className="absolute inset-0 w-full h-full m-auto bg-black/40 blur-[2px]" />
                                     </div>
@@ -166,10 +171,11 @@ const Home = () => {
                         title={"News"}
                     ></News>
                     {/* auth */}
-                    <div className="flex flex-col gap-4">
+                    {!user_id ? <div className="flex flex-col gap-4">
                         <Button name={"Register"} handleOnClick={handleToRegister} size="l" type="main" />
                         <Button name={"Login"} handleOnClick={handleToLogin} size="l" type="primary" />
-                    </div>
+                    </div> : ""}
+
                 </div>
             </section>
             <Media></Media>
