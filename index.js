@@ -23,7 +23,6 @@ app.use(expressFileUpload({
     createParentPath: true
 }))
 app.use(express.static('./src/uploads/'))
-//routes api
 app.use("/api/users", routeUsers)
 app.use("/api/posts", routePosts)
 app.use("/api/auth", routeAuth)
