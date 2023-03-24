@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { AiOutlineCloudUpload } from "react-icons/ai"
 import _ from "lodash"
 import { RegisterApi } from "../reqApi/Auth"
-import FormC from '../components/FormC';
-import InputC from '../components/InputC';
+import FormC from '../components/FormController/FormC';
+import InputC from '../components/FormController/InputC';
 
 
 

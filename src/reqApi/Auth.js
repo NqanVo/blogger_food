@@ -2,6 +2,7 @@ import axios from "axios"
 import { Notify } from "../components/default/Notify"
 import { loginStart, loginSuccess, loginError, logout } from "../redux/slice/auth"
 
+
 export const RegisterApi = (data, navigate) => {
     try {
         const handleRegister = async () => {
@@ -41,7 +42,6 @@ export const LoginApi = (data, navigate, dispath) => {
 }
 
 export const LogoutApi = (navigate, dispath) => {
-
     try {
         const login = async () => {
             await axios.post(process.env.REACT_APP_URL_API + "auth/logout")
@@ -54,3 +54,4 @@ export const LogoutApi = (navigate, dispath) => {
         console.log(error);
     }
 }
+

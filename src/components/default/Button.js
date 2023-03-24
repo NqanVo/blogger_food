@@ -19,14 +19,14 @@ const Button = forwardRef((props, ref) => {
             break;
     }
     if (size === "l")
-        size = "w-full"
+        size = "lg:w-full"
     else
         size = "w-fit"
     return (
         <button
             ref={ref}
             onClick={handleOnClick}
-            className={`px-4 py-2 border-[2px] text-sm lg:text-base text-center flex justify-center items-center font-medium ${size} ${makeup}`}
+            className={`px-4 py-2 border-[2px] text-sm lg:text-base text-center h-12 flex justify-center items-center font-medium ${size} ${makeup}`}
         >
             {name}
         </button>
