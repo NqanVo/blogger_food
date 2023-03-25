@@ -3,10 +3,11 @@ import DetailPost from "./pages/DetailPost";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import 'react-notifications/lib/notifications.css';
+import "react-notifications/lib/notifications.css";
 import Information from "./pages/Information";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
+import ListPosts from "./pages/ListPosts";
 function App() {
   return (
     <Routes>
@@ -16,6 +17,7 @@ function App() {
       <Route path="/chinese"></Route>
       <Route path="/blog"></Route>
       <Route path="/post/:id" element={<DetailPost />}></Route>
+      <Route path="/posts" element={<ListPosts />}></Route>
 
       <Route path="/information" element={<Information />}></Route>
       <Route path="/create-post" element={<CreatePost />}></Route>
