@@ -4,9 +4,9 @@ import { logout } from "../redux/slice/auth";
 export const checkTokenExpired = (res, dispath) => {
   if (res.data.status === "tokenExpired") {
     Notify(res.data.status, "End of session");
-    localStorage.removeItem("user_data");
+    localStorage.setItem("user_data", JSON.stringify({}));
     dispath(logout());
-    setTimeout(() => (window.location.href = "/login"), 1000);
+    window.location.href = "/login"
   } else return false;
   return true;
 };
