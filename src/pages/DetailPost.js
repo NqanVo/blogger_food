@@ -10,6 +10,7 @@ import { BiTime } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
 const DetailPost = () => {
   const post_id = useLocation().pathname.split("/")[2];
+  document.title = `BlogFood | ${post_id}`
   const [postData, setPostData] = useState();
   const [postWithCateData, setPostWithCateData] = useState();
   useEffect(() => {
@@ -19,7 +20,7 @@ const DetailPost = () => {
       );
       const res2 = await axios.get(
         process.env.REACT_APP_URL_API +
-          `posts?category=${res.data.data.dataCategory.category_name}&limit=6`
+        `posts?category=${res.data.data.dataCategory.category_name}&limit=6`
       );
       const postWithCate = res2.data.data.posts;
       const filterPostWithCate = postWithCate.filter(
@@ -44,7 +45,7 @@ const DetailPost = () => {
           </Link>
           {">"}
           <Link
-            to={`/posts?category=${postData.dataCategory.category_name}&limit=10`}
+            to={`/posts?author=&category=${postData.dataCategory.category_name}&order=DESC`}
             className="text-red-500 underline capitalize"
           >
             {postData.dataCategory.category_name}
