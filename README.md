@@ -1,4 +1,12 @@
 # Back End Api: NodeJs, Express, Express-uploadfile, JWT
+## Update 26/04/2023
+## Posts
+Get posts: http://ec2-13-250-12-33.ap-southeast-1.compute.amazonaws.com:7070/api/posts?author=&authorID=&category=&order=&pages=&limit=
+Get single post: http://ec2-13-250-12-33.ap-southeast-1.compute.amazonaws.com:7070/api/posts/21
+## Users
+Get users: http://ec2-13-250-12-33.ap-southeast-1.compute.amazonaws.com:7070/api/users/author
+Get single user: http://ec2-13-250-12-33.ap-southeast-1.compute.amazonaws.com:7070/api/users/author/10
+
 ## Auth
 ### Register: Method: Post, /api/auth/register
 #### Req, Body: 
