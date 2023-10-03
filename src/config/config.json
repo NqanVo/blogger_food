@@ -1,12 +1,16 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "blogger_food2",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "logging": false,
-    "timezone": "+07:00"
+    "password": "hV0MfGtDfanUgZY9U4tUVLSRHnTiwnEn",
+    "database": "blog_food_database",
+    "host": "dpg-ckdcn0siibqc73a1827g-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions":{
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
     "username": "root",
