@@ -1,6 +1,7 @@
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
 
 const { resNotify } = require("../handleNotify/resNotify");
 
@@ -13,7 +14,7 @@ const getAuthor = async (req, res) => {
       data: { ...other },
     });
   } catch (error) {
-    res.status(200).json({
+    res.status(404).json({
       ...resNotify("error", error),
     });
   }
@@ -35,7 +36,7 @@ const getAllAuthor = async (req, res) => {
       data: users,
     });
   } catch (error) {
-    res.status(200).json({
+    res.status(400).json({
       ...resNotify("error", error),
     });
   }
@@ -65,7 +66,7 @@ const updateUser = async (req, res) => {
       data: { ...other },
     });
   } catch (error) {
-    res.status(200).json({
+    res.status(400).json({
       ...resNotify("error", error),
     });
   }
@@ -94,7 +95,7 @@ const updatePassword = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(200).json({
+    res.status(400).json({
       ...resNotify("error", error),
     });
   }
@@ -102,27 +103,31 @@ const updatePassword = async (req, res) => {
 
 const removeAvatarOld = async (user_id) => {
   const user = await db.tbl_user.findByPk(user_id);
-  const avatar = user.user_avatar;
-  console.log(avatar);
+  const avatarOld = user.user_avatar;
   if (avatar.indexOf("defaultAvatar") !== 0)
-    fs.unlinkSync(`./src/uploads/${avatar}`);
+    await cloudinary.uploader.destroy(avatarOld);
 };
 
 const updateAvatar = async (req, res) => {
+  let namefileUploaded = null;
   try {
     const user_avatar = req.files.file;
     const user_id = req.params.id;
     await removeAvatarOld(user_id);
-    const rename_avatar =
-      (await user_avatar.name.split(".")[0]) +
-      "_" +
-      Date.now() +
-      "." +
-      user_avatar.mimetype.split("/")[1];
-    user_avatar.mv("./src/uploads/" + rename_avatar);
+    //Upload image to cloud
+    const resultUpload = await cloudinary.uploader.upload(
+      user_avatar.tempFilePath,
+      {
+        resource_type: "image",
+        folder: "blog_food",
+      }
+    );
+    //get name image affter upload
+    namefileUploaded = resultUpload.public_id;
+
     await db.tbl_user.update(
       {
-        user_avatar: rename_avatar,
+        user_avatar: namefileUploaded,
       },
       {
         where: {
@@ -137,6 +142,8 @@ const updateAvatar = async (req, res) => {
       data: { ...other },
     });
   } catch (error) {
+    if (namefileUploaded != null)
+      await cloudinary.uploader.destroy(namefileUploaded);
     res.status(200).json({
       ...resNotify("error", error),
     });
