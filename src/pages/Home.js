@@ -36,7 +36,7 @@ const categorise = [
 ];
 
 const Home = () => {
-  document.title = "BlogFood"
+  document.title = "BlogFood";
   const navigate = useNavigate();
 
   const [dataMostPopularDish, setDataMostPopularDish] = useState([]);
@@ -62,7 +62,6 @@ const Home = () => {
     };
     getData();
   }, [viewPageMPD]);
-
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get(
@@ -100,31 +99,32 @@ const Home = () => {
             <div className="w-full grid grid-cols-5 gap-2">
               {dataMostPopularDish
                 ? dataMostPopularDish.map((post, index) => {
-                  return (
-                    <Link
-                      to={`/post/${post.post_id}`}
-                      onMouseOver={() => setDataAuthor(post.dataUser)}
-                      key={index}
-                      className={`${index === 0 || index === 3
-                        ? "col-span-3"
-                        : "col-span-2"
+                    return (
+                      <Link
+                        to={`/post/${post.post_id}`}
+                        onMouseOver={() => setDataAuthor(post.dataUser)}
+                        key={index}
+                        className={`${
+                          index === 0 || index === 3
+                            ? "col-span-3"
+                            : "col-span-2"
                         } relative w-full h-40 group hover:cursor-pointer overflow-hidden`}
-                    >
-                      <img
-                        src={
-                          process.env.REACT_APP_URL_API_IMAGE +
-                          post.post_thumb
-                        }
-                        alt=""
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                      <h3 className="absolute inset-0 text-white z-50 flex justify-center items-center transform -translate-x-full duration-300 opacity-0 group-hover:translate-x-0 group-hover:opacity-100">
-                        {post.post_title}
-                      </h3>
-                      <div className="absolute inset-0 w-full h-full m-auto bg-black/20 duration-300 group-hover:bg-black/50 blur-[2px]" />
-                    </Link>
-                  );
-                })
+                      >
+                        <img
+                          src={
+                            process.env.REACT_APP_URL_API_IMAGE +
+                            post.post_thumb
+                          }
+                          alt=""
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        <h3 className="absolute inset-0 text-white z-50 flex justify-center items-center transform -translate-x-full duration-300 opacity-0 group-hover:translate-x-0 group-hover:opacity-100">
+                          {post.post_title}
+                        </h3>
+                        <div className="absolute inset-0 w-full h-full m-auto bg-black/20 duration-300 group-hover:bg-black/50 blur-[2px]" />
+                      </Link>
+                    );
+                  })
                 : "loading..."}
             </div>
             <Pagination
